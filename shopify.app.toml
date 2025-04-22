@@ -1,8 +1,8 @@
 # Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
 
-client_id = "d7e8bf4436887a7897ca8464372b62c8"
-name = "AESwave extensions only app"
-handle = "aeswave-extensions-only-app"
+client_id = "81b1ab919a169f39ec46888bebc17ca7"
+name = "Prod extensions only app"
+handle = "prod-extensions-only-app"
 application_url = "https://shopify.dev/apps/default-app-home"
 embedded = true
 
