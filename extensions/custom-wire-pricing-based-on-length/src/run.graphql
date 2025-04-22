@@ -1,0 +1,16 @@
+query Input {
+  cart {
+    lines {
+      id
+      quantity
+      custom_length: attribute(key: "Length(ft)") {
+        value
+      }
+      cost{
+        subtotalAmount{
+          amount
+        }
+      }
+    }
+  }
+}
