@@ -12,7 +12,7 @@ import {
 import { useState } from 'react';
 import { useApplyAttributeChange, useApplyNoteChange } from '@shopify/ui-extensions-react/checkout';
 
-export default reactExtension("purchase.checkout.payment-method-list.render-after", () => <Extension />);
+export default reactExtension("purchase.checkout.block.render", () => <Extension />);
 
 function Extension() {
   const metafields = useAppMetafields({
