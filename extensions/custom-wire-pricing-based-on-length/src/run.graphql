@@ -5,7 +5,10 @@ query Input {
       quantity
       custom_length: attribute(key: "Length(ft)") {
         value
-      }
+      },
+      price_change: attribute(key: "_price_change") {
+        value
+      },
       cost{
         subtotalAmount{
           amount
