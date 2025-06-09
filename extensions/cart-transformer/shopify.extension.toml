@@ -2,19 +2,19 @@ api_version = "2025-01"
 
 [[extensions]]
 name = "t:name"
-handle = "custom-wire-pricing-based-on-length1"
+handle = "cart-transformer"
 type = "function"
 
 description = "t:description"
 
   [[extensions.targeting]]
-  target = "purchase.product-discount.run"
+  target = "purchase.cart-transform.run"
   input_query = "src/run.graphql"
   export = "run"
 
   [extensions.build]
   command = "cargo build --target=wasm32-wasip1 --release"
-  path = "target/wasm32-wasip1/release/custom-wire-pricing-based-on-length1.wasm"
+  path = "target/wasm32-wasip1/release/cart-transformer.wasm"
   watch = [ "src/**/*.rs" ]
 
   [extensions.ui.paths]

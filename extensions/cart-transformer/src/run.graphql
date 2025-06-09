@@ -1,0 +1,37 @@
+query Input {
+  cart {
+    lines {
+      id
+      quantity
+      custom_length: attribute(key: "Length(ft)") {
+        value
+      },
+      price_change: attribute(key: "_price_change") {
+        value
+      },
+      cost {
+        amountPerQuantity {
+          amount
+        }
+      }
+      merchandise {
+        __typename
+        ... on ProductVariant {
+          product {
+            title
+          }
+        }
+        ... on CustomProduct {
+          title
+        }
+      }
+    }
+    buyerIdentity {
+      customer {
+        id
+        hasAnyTag(tags: ["VIP"])
+      }
+    }
+  }
+}
+
