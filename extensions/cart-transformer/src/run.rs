@@ -13,30 +13,28 @@ fn run(input: input::ResponseData) -> Result<output::FunctionRunResult> {
     for line in input.cart.lines.iter() {
         let base_price = line.cost.amount_per_quantity.amount.0;
         if let Some(length_attr) = line.custom_length.as_ref() {
-    if let Some(value_str) = length_attr.value.as_ref() {
-        if let Ok(slider_value) = value_str.parse::<f64>() {
-            let length_diff = slider_value - base_length;
-            let adjusted_price = (base_price + (length_diff * price_per_foot)).max(0.0);
+            if let Some(value_str) = length_attr.value.as_ref() {
+                if let Ok(slider_value) = value_str.parse::<f64>() {
+                    let length_diff = slider_value - base_length;
+                    let adjusted_price = (base_price + (length_diff * price_per_foot)).max(0.0);
 
-            // This is secure — it's based on logic you control
-            updates.push(output::CartOperation::Update(output::UpdateOperation {
-                cart_line_id: line.id.clone(),
-                title: None,
-                price: Some(output::UpdateOperationPriceAdjustment {
-                    adjustment: output::UpdateOperationPriceAdjustmentValue::FixedPricePerUnit(
-                        output::UpdateOperationFixedPricePerUnitAdjustment {
-                            amount: Decimal(adjusted_price),
-                        },
-                    ),
-                }),
-                image: None,
-            }));
+                    // This is secure — it's based on logic you control
+                    updates.push(output::CartOperation::Update(output::UpdateOperation {
+                        cart_line_id: line.id.clone(),
+                        title: None,
+                        price: Some(output::UpdateOperationPriceAdjustment {
+                            adjustment: output::UpdateOperationPriceAdjustmentValue::FixedPricePerUnit(
+                                output::UpdateOperationFixedPricePerUnitAdjustment {
+                                    amount: Decimal(adjusted_price),
+                                },
+                            ),
+                        }),
+                        image: None,
+                    }));
+                }
+            }
         }
     }
-}
-
-    }
-
     Ok(output::FunctionRunResult {
         operations: updates,
     })
