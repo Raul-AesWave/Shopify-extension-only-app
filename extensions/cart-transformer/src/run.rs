@@ -18,7 +18,6 @@ fn run(input: input::ResponseData) -> Result<output::FunctionRunResult> {
                     let length_diff = slider_value - base_length;
                     let adjusted_price = (base_price + (length_diff * price_per_foot)).max(0.0);
 
-                    // This is secure — it's based on logic you control
                     updates.push(output::CartOperation::Update(output::UpdateOperation {
                         cart_line_id: line.id.clone(),
                         title: None,
