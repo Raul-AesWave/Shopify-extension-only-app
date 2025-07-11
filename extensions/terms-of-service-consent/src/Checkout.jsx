@@ -12,7 +12,7 @@ import {
 import { useState } from 'react';
 import { useApplyAttributeChange, useApplyNoteChange } from '@shopify/ui-extensions-react/checkout';
 
-export default reactExtension("purchase.checkout.payment-method-list.render-after", () => <Extension />);
+export default reactExtension("purchase.checkout.block.render", () => <Extension />);
 
 function Extension() {
   const metafields = useAppMetafields({
@@ -29,7 +29,7 @@ function Extension() {
   const [validationError, setValidationError] = useState(null); 
   const clearValidationErrors = () => setValidationError(null);
 
-  const tosLink = metafields[0]?.metafield?.value || 'https://storage.googleapis.com/resources.aeswave.com/TOS/TOS%202012%20v1.0.pdf';
+  const tosLink = metafields[0]?.metafield?.value || 'https://aeswave-store.myshopify.com/policies/terms-of-service';
 
   useBuyerJourneyIntercept(({ canBlockProgress }) => {
     if (!agreed && canBlockProgress) {
@@ -126,7 +126,7 @@ const handleChange = async (checked) => {
           value={note}
           onChange={(value) => {
             setNote(value);
-            applyNoteChange({ type: 'updateNote', note: value }); // ✅ Save to Shopify Order Note field
+            applyNoteChange({ type: 'updateNote', note: value }); // Save to Shopify Order Note field
           }}
         />
       )}
@@ -146,9 +146,10 @@ const handleChange = async (checked) => {
         I agree to the Terms of Service
       </Checkbox>
 
-      <Link to={tosLink} target="_blank">
-        View full Terms of Service (PDF)
-      </Link>
+      <a href={tosLink} target="_blank" rel="noopener noreferrer">
+        View full Terms of Service
+      </a>
+
       {/* Start TOS */}
     </BlockStack>
   );
