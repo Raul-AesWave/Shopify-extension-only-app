@@ -7,7 +7,6 @@ import {
   Link,
   useAppMetafields,
   useBuyerJourneyIntercept,
-  useBuyerJourneyActiveStep,
   useExtensionCapability,
 } from '@shopify/ui-extensions-react/checkout';
 import { useState } from 'react';
@@ -27,14 +26,13 @@ function Extension() {
 
   const canBlockProgress = useExtensionCapability("block_progress")
   const [agreed, setAgreed] = useState(false); 
-  const [validationError, setValidationError] = useState(null); 
+  const [validationError, setValidationError] = useState("null"); 
   const clearValidationErrors = () => setValidationError(null);
 
   const tosLink = metafields[0]?.metafield?.value || 'https://storage.googleapis.com/resources.aeswave.com/TOS/TOS%202012%20v1.0.pdf';
 
   useBuyerJourneyIntercept(({ canBlockProgress }) => {
-    const onPaymentStep = activeStep?.type === 'PAYMENT';
-    if (!agreed && canBlockProgress && onPaymentStep) {
+    if (!agreed && canBlockProgress) {
       return {
         behavior: 'block',
         reason: 'You must agree to the Terms of Service before completing your order.',
@@ -43,11 +41,6 @@ function Extension() {
             setValidationError('Agree to Terms of Service')
           }
         },
-        errors: [
-          {
-            message: 'Must Agree to Terms of Service.',        
-          }
-        ]
       };
     }
     return { 
@@ -140,7 +133,7 @@ const handleChange = async (checked) => {
         id="tos-agree"
         name="tos-agree"
         required={canBlockProgress}
-        onChange={handleChange}
+        onChange={setAgreed}
         error= {validationError}
         checked={agreed}
         onInput = {clearValidationErrors}
@@ -151,7 +144,7 @@ const handleChange = async (checked) => {
       <Link to={tosLink} external>
         View full Terms of Service 
       </Link>
-      {/* Start TOS */}
+      {/* End TOS */}
     </BlockStack>
   );
 }
